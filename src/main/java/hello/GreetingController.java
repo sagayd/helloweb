@@ -62,39 +62,9 @@ public class GreetingController {
 	public static String testData = "latency";
 
 
-	@RequestMapping("/greeting")
+	@RequestMapping("/")
 	public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
 		LOG.debug("BEGIN: greeting api");  
-		//System.out.println("Trigger test: ");
-		//LOG.error("Encountered java.lang.InterruptedException while reading the images in the method : /greeting");
-		//LOG.error("Unable to find properties file : java.io.FileNotFoundException at void hello line number ");
-
-		// ***** memory leakdemonstrating  ******//
-	/*      LOG.info("Memeroy Leak enabled:");
-		if (MEMORY_LEAK_TEST_STRING == null || MEMORY_LEAK_TEST_STRING.length() == 0) {
-			for (int i = 0; i < 10000; i++) {
-				String test = "" + i + "" + i + "" + i;
-				MEMORY_LEAK_TEST_STRING += testData;
-		         }
-		 } else {
-		      String suffix = "0a1b2c3d4e5";
-		      MEMORY_LEAK_TEST_STRING += suffix;
-		}
-		BadKey badKey = new BadKey("");
-		badKey = new BadKey("" + (new Date().getTime()));
-	*/
-		    //Commented the following line, causes problems with mem util 
-	        //BAD_KEY_MAP.put(badKey, "" + (new Date().getTime()) + "-" + (new Date().getTime()) + MEMORY_LEAK_TEST_STRING);		  
-	    
-		//***End of Memory leak code ****//
-
-		//Demonstrating Architectural Regression/*	POSTGRES_NUM_OPS_METRIC_COUNT += 1;
-		//Architectural Regression implementation has been shifted to ArchRegress.java, here only calling thread class.
-		// test code
-
-		//ArchRegress test = new ArchRegress();
-		// //Thread th = new Thread(test);
-
 		try{
 			Thread th = new Thread();
 			th.sleep(40);
@@ -103,33 +73,8 @@ public class GreetingController {
 		}catch(Exception ex) {
 			LOG.error("Error: ", ex);
 		}	
-		// **** End of architectural regression code ***//
 
-		/*if (Long.compare(TIMESTAMP, 0l) == 0
-				|| Long.compare(((new Date()).getTime() - TIMESTAMP), 5000) >= 0) {
-			TIMESTAMP = (new Date()).getTime();
-
-			try (Socket clientSocket = new Socket(KAIROSDB_IP_ADDRESS, PORT);
-					PrintWriter out = (clientSocket.isConnected()) ? new PrintWriter(
-							clientSocket.getOutputStream(), true) : null;) {
-				if (out != null) {
-					LOG.info("Connected with the server : {} with port : {}",
-							clientSocket.getInetAddress().getHostName(),
-							clientSocket.getPort());
-					writeIntoKairosDB(out, "tomcat.dbOperations", ""+ POSTGRES_NUM_OPS_METRIC_COUNT);
-					// writeIntoKairosDB(out, "elasticsearch.num_of_calls",
-					// "1");
-				}
-			} catch (IOException ex) {
-				LOG.error("Error: ", ex);
-			}
-		}*/
 		LOG.info("Hello spark :: Inside greeting API");
-		//System.out.println("Hello spark + Inside greeting API");
-
-		// System.out.println("HashMap size : "+ leakMap.size());
-		// new Greeting(MetricsRegistryClient.client().incrRequestCount(),String.format(template, name))
-		//return "HashMap size  : "+ BAD_KEY_MAP.size() + "\n String length  : " + MEMORY_LEAK_TEST_STRING.length() +"\n ";
 		String query;
 		StringBuffer sb = new StringBuffer();
 		String query2;
@@ -142,26 +87,14 @@ public class GreetingController {
 				sb.append(query);	
 			br.close();
 
-			String whichdog = "dog1";
-
-			/* Introducing Arch. regression*/
-
-			// whichdog = "dog2";
-			/*till here*/
-
-			BufferedReader br2 = new BufferedReader(new InputStreamReader(cl.getResource(whichdog).openStream()));
-			while((query2=br2.readLine())!=null)
-				sb2.append(query2);	
-			br2.close();
-
-
 		}
 		catch(Exception e){ 
 			e.printStackTrace();
 			LOG.error("Error: " + e);
 		}
 
-		String greetResponse = sb.length()>0 ? sb.toString().replace("##dogimage##", sb2.toString()) : " No page found";
+//		String greetResponse = sb.length()>0 ? sb.toString().replace("##dogimage##", sb2.toString()) : " No page found";
+		String greetResponse = sb.length()>0 ? sb.toString() : " No page found";
 		//LOG.debug("END: greeting" + "\n" + greetResponse);
 		return greetResponse;
 		// 	return "POSTGRES_NUM_OPS_METRIC_COUNT : "+ POSTGRES_NUM_OPS_METRIC_COUNT;

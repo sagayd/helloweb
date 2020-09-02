@@ -36,7 +36,7 @@ repositories {
    jcenter()
 }
 
-sourceCompatibility = 1.8
+//sourceCompatibility = 1.8
 
 dependencies {
    compile("org.springframework.boot:spring-boot-starter-web"){
@@ -75,7 +75,8 @@ task packDeb(type: Deb, dependsOn: bootRepackage) {
    packageName = 'restapp'
    version = 1.0
 
-   requires('openjdk-8-jre-headless')
+   requires('openjdk-7-jre-headless')
+   //requires('openjdk-8-jre-headless')
    //requires('openjdk-8-jdk')
    //requires('java')
       from('build/libs/.') {

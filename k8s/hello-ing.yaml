@@ -1,0 +1,15 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: helloweb-ingress
+spec:
+  rules:
+  - host: helloweb.gcloud.opsmx.com
+    http:
+      paths:
+      - backend:
+          serviceName: helloweb-svc
+          servicePort: 8080
+        path: /
+        pathType: ImplementationSpecific

@@ -22,7 +22,7 @@ spec:
       name: helloweb
     spec:
       containers:
-      - image: opsmx11/helloweb:${ parameters.imagetag }
+      - image: opsmx11/helloweb: ${ trigger.properties["image.tag"] }
         imagePullPolicy: Always
         name: helloweb
       restartPolicy: Always

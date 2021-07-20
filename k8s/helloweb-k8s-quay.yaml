@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: helloweb
+  name: helloweb-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloweb
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: helloweb
+      name: helloweb
+    spec:
+      containers:
+      - image: quay.io/sagayd/helloweb:latest
+        imagePullPolicy: Always
+        name: helloweb
+      restartPolicy: Always
+      securityContext: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: helloweb
+  name: helloweb-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: helloweb
+  sessionAffinity: None
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: helloweb-ingress
+spec:
+  rules:
+  - host: helloweb.opsmx.com
+    http:
+      paths:
+      - backend:
+          serviceName: helloweb-svc
+          servicePort: 8080
+        path: /
+        pathType: ImplementationSpecific

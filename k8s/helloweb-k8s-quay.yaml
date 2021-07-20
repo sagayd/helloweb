@@ -22,7 +22,7 @@ spec:
       name: helloweb
     spec:
       containers:
-      - image: quay.io/sagayd/helloweb:latest
+      - image: quay.io/sagayd/helloweb:${ trigger.properties["image.tag"] }
         imagePullPolicy: Always
         name: helloweb
       restartPolicy: Always
